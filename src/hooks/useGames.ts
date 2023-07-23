@@ -12,7 +12,8 @@ export interface Games{
     id:number;
     name:string
     background_image:string;
-    parent_platforms: {platform:Platform}[]
+    parent_platforms: {platform:Platform}[];
+    metacritic:number;
  }
  
  interface FetchProps {
@@ -24,20 +25,28 @@ export interface Games{
  const useGames = () =>{
     const [games, setGames] =  useState<Games[]>([])
     const [error, setError] =  useState("")
+    const [isLoading, setIsloading] =  useState(false)
+
 
    useEffect(()=>{
     const controller = new AbortController();
-
+      setIsloading(true)
       apiClient.get<FetchProps>('/games', {signal:controller.signal})
-       .then((res) => setGames(res.data.results))
+       .then((res) => {
+           setGames(res.data.results)
+           setIsloading(false)
+         })
        .catch((err)=>{ 
           if(err instanceof CanceledError) return;
-          setError(err.message)})
+          setError(err.message)
+          setIsloading(false)
+          
+        })
 
        return () => controller.abort()
    },[])
 
-    return{games, error}
+    return{games, error, isLoading}
 }
 
 export default useGames;
