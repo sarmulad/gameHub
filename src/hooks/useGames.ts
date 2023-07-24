@@ -23,16 +23,21 @@ export interface Games{
 
  }
 
- const useGames = (selectedGenre: Genres | null) =>{
+ const useGames = (selectedGenre: Genres | null, selectedPlatform: Platform | null) =>{
     const [games, setGames] =  useState<Games[]>([])
     const [error, setError] =  useState("")
     const [isLoading, setIsloading] =  useState(false)
-
+    const genreAndPlatformIds = (selectedGenre || selectedPlatform) ? [selectedGenre?.id || selectedPlatform?.id] : [];
 
    useEffect(()=>{
     const controller = new AbortController();
       setIsloading(true)
-      apiClient.get<FetchProps>('/games', {signal:controller.signal, params: {genres: selectedGenre?.id} })
+      apiClient.get<FetchProps>('/games', 
+        {signal:controller.signal, 
+         params:{
+         genres: selectedGenre?.id, 
+         platforms: selectedPlatform?.id
+         }})
        .then((res) => {
            setGames(res.data.results)
            setIsloading(false)
@@ -43,9 +48,9 @@ export interface Games{
           setIsloading(false)
           
         })
-
+       
        return () => controller.abort()
-   }, selectedGenre ? [selectedGenre.id] : [])
+   }, genreAndPlatformIds )
 
     return{games, error, isLoading}
 }
