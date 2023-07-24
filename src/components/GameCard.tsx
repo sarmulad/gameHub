@@ -11,7 +11,7 @@ import getCroppedImg from '../services/getCroppedImg'
 
 const GameCard = ({game}:Props) => {
   return (
-    <Card borderRadius={10} overflow={'hidden'}  width={'300px'}>
+    <Card borderRadius={10} overflow={'hidden'}  >
         <Image src={ getCroppedImg(game.background_image)}/>
         <CardBody>
             <Heading fontSize="2xl">{game.name}</Heading>
