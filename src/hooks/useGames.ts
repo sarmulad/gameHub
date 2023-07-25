@@ -20,14 +20,13 @@ export interface Games{
  interface FetchProps {
     count: number;
     results:Games[]
-
  }
 
- const useGames = (selectedGenre: Genres | null, selectedPlatform: Platform | null) =>{
+ const useGames = (selectedGenre: Genres | null, selectedPlatform: Platform | null, selectedSort: string ) =>{
     const [games, setGames] =  useState<Games[]>([])
     const [error, setError] =  useState("")
     const [isLoading, setIsloading] =  useState(false)
-    const genreAndPlatformIds = (selectedGenre || selectedPlatform) ? [selectedGenre?.id || selectedPlatform?.id] : [];
+    const genreAndPlatformIds = (selectedGenre || selectedPlatform || selectedSort) ? [selectedGenre?.id, selectedPlatform?.id , selectedSort] : [];
 
    useEffect(()=>{
     const controller = new AbortController();
@@ -36,8 +35,9 @@ export interface Games{
         {signal:controller.signal, 
          params:{
          genres: selectedGenre?.id, 
-         platforms: selectedPlatform?.id
-         }})
+         platforms: selectedPlatform?.id, 
+         ordering: selectedSort,         
+        }})
        .then((res) => {
            setGames(res.data.results)
            setIsloading(false)
