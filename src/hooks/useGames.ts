@@ -50,7 +50,7 @@ export interface Games{
         })
        
        return () => controller.abort()
-   }, genreAndPlatformIds )
+   }, [selectedGenre?.id, selectedPlatform?.id , selectedSort] || [] )
 
     return{games, error, isLoading}
 }
