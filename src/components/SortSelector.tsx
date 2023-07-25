@@ -21,8 +21,7 @@ const SortSelector = ({onSelectSort, selectedSort}:Props) => {
 
     const currentSort = sortOrders.find(sort => sort.value === selectedSort )
      // filter returns array while find returns a single item
-    //  const {data, error} = useSorts()
-    //  if(error) return null; // we dont want to return an error to the users
+    
   return (
     <Menu>
         <MenuButton as={Button} rightIcon={<BsChevronDown/>}>

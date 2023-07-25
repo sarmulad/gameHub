@@ -22,11 +22,11 @@ export interface Games{
     results:Games[]
  }
 
- const useGames = (selectedGenre: Genres | null, selectedPlatform: Platform | null, selectedSort: string ) =>{
+ const useGames = (selectedGenre: Genres | null, selectedPlatform: Platform | null, selectedSort: string, searchText: string ) =>{
     const [games, setGames] =  useState<Games[]>([])
     const [error, setError] =  useState("")
     const [isLoading, setIsloading] =  useState(false)
-    const genreAndPlatformIds = (selectedGenre || selectedPlatform || selectedSort) ? [selectedGenre?.id, selectedPlatform?.id , selectedSort] : [];
+    const genreAndPlatformIds = (selectedGenre || selectedPlatform || selectedSort || searchText) ? [selectedGenre?.id, selectedPlatform?.id , selectedSort, searchText] : [];
 
    useEffect(()=>{
     const controller = new AbortController();
@@ -36,7 +36,8 @@ export interface Games{
          params:{
          genres: selectedGenre?.id, 
          platforms: selectedPlatform?.id, 
-         ordering: selectedSort,         
+         ordering: selectedSort,
+         search: searchText,        
         }})
        .then((res) => {
            setGames(res.data.results)
@@ -50,7 +51,7 @@ export interface Games{
         })
        
        return () => controller.abort()
-   }, [selectedGenre?.id, selectedPlatform?.id , selectedSort] || [] )
+   }, [selectedGenre?.id, selectedPlatform?.id , selectedSort, searchText] || [] )
 
     return{games, error, isLoading}
 }
