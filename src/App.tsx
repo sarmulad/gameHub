@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { Genres } from './hooks/useGenres';
 import PlatformSelector from './components/PlatformSelector';
 import { Platform } from './hooks/useGames';
-import SortSelector from './components/sortSelector';
 import GameHeading from './components/GameHeading';
+import SortSelect from './components/SortSelect';
 
 function App() {
    const [selectedGenre, setselectedGenre ] = useState<Genres | null >(null)
@@ -40,7 +40,7 @@ function App() {
            <GameHeading selectedGenre={selectedGenre} selectedPlatform={selectedPlatform} />
             <HStack spacing={5} marginBottom={5}>
              <PlatformSelector selectedPlatform={selectedPlatform} onSelectPlatform={(platform => setselectedPlatform(platform))}/>
-              <SortSelector  onSelectSort={(sort:string) => setselectedSort(sort)} selectedSort= {selectedSort}/>
+              <SortSelect  onSelectSort={(sort:string) => setselectedSort(sort)} selectedSort= {selectedSort}/>
             </HStack>
          </Box>
         <GameGrid selectedGenre={selectedGenre} selectedPlatform={selectedPlatform} selectedSort= {selectedSort} searchText={searchText} />

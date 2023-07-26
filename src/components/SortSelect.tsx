@@ -9,7 +9,7 @@ interface Props{
     selectedSort: string;
 }
 
-const SortSelector = ({onSelectSort, selectedSort}:Props) => {
+const SortSelect = ({onSelectSort, selectedSort}:Props) => {
     const sortOrders = [
         {value:"", label: 'Relevance'},
         {value:"added", label:'Date added'},
@@ -39,4 +39,4 @@ const SortSelector = ({onSelectSort, selectedSort}:Props) => {
   )
 }
 
-export default SortSelector
+export default SortSelect
